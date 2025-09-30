@@ -1,14 +1,11 @@
 import React from "react";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route } from 
+"react-router-dom";
+import Exercises from "./pages/Exersices";
 
 function App() {
   return (
-    <Router>
-      <Layout>
-        <Routes>
-        </Routes>
-      </Layout>
-    </Router>
+    <Exercises />
   );
 }
 
