@@ -1,12 +1,8 @@
 import React from "react";
-import { BrowserRouter as Router, Routes, Route } from 
-"react-router-dom";
-import Exercises from "./pages/Exersices";
+import AppRoutes from "./routes/AppRoutes";
 
 function App() {
-  return (
-    <Exercises />
-  );
+  return <AppRoutes />;
 }
 
 export default App;
