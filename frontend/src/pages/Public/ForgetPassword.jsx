@@ -8,37 +8,32 @@ export default function Login() {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
-  const handleLogin = async (e) => {
+  // Simulated user data (like your JSON file)
+  const users = [
+    { email: "test@example.com", password: "12345678", firstName: "Ali" },
+    { email: "dev@code2lead.com", password: "password123", firstName: "Ahmed" },
+  ];
+
+  const handleLogin = (e) => {
     e.preventDefault();
     setError("");
     setLoading(true);
 
-    try {
-      const res = await fetch("http://localhost:5000/api/login", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ email, password }),
-      });
+    setTimeout(() => {
+      const user = users.find(
+        (u) => u.email === email && u.password === password
+      );
 
-      const data = await res.json();
-
-      if (!res.ok) {
-        throw new Error(data.message || "Invalid credentials");
+      if (user) {
+        localStorage.setItem("firstName", user.firstName);
+        localStorage.setItem("token", "mockToken123"); // fake token
+        window.location.href = "/home"; // redirect to home
+      } else {
+        setError("Invalid email or password");
       }
 
-      // Save token (for later auth)
-      localStorage.setItem("token", data.token);
-      localStorage.setItem("firstName", data.firstName);
-
-      // Redirect (or show success)
-      window.location.href = "/home";
-    } catch (err) {
-      setError(err.message);
-    } finally {
       setLoading(false);
-    }
+    }, 800); // simulate small delay like real API
   };
 
   return (
@@ -46,7 +41,6 @@ export default function Login() {
       className="min-h-screen bg-cover bg-center flex items-center justify-center"
       style={{ backgroundImage: `url(${background})` }}
     >
-      {/* Main content */}
       <div className="flex flex-col md:flex-row w-full max-w-5xl z-10 justify-between px-4 md:px-0">
         {/* Left Side */}
         <div className="flex flex-col justify-center items-start w-full md:w-1/2 pl-0 md:pl-12 mb-8 md:mb-0">
@@ -94,9 +88,9 @@ export default function Login() {
               <button
                 type="submit"
                 disabled={loading}
-                className="w-full py-3 rounded-md bg-gradient-to-r from-[#5f6fff] to-[#580475] text-white font-semibold text-lg mt-2 mb-2 transition hover:opacity-90 disabled:opacity-50"
+                className="w-full py-3 rounded-md bg-gradient-to-r from-[#628EFF] to-[#580475] text-white font-semibold text-lg mt-2 mb-2 transition hover:opacity-90 disabled:opacity-50"
               >
-                {loading ? "Logging in..." : "Login"}
+                {loading ? "Checking..." : "Login"}
               </button>
             </form>
 

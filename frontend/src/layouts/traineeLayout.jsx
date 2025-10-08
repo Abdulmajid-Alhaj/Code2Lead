@@ -1,5 +1,5 @@
 import React from "react";
-import TraineeSidebar from "../components/Sidebar/TraineeSidebar";
+import TraineeSidebar from "../components/sidebar/traineeSidebar";
 import background from "../assets/background.png";
 
 export  function Trainee({ children }) {
