@@ -1,7 +1,5 @@
-// Import mongoose library
 const mongoose = require("mongoose");
 
-// Define the schema for the "Lessons" collection
 const LessonSchema = new mongoose.Schema(
     {
         // Reference to the chapter this lesson belongs to
@@ -50,6 +48,5 @@ const LessonSchema = new mongoose.Schema(
     }
 );
 
-// Create and export the Lesson model
 const Lesson = mongoose.model("Lesson", LessonSchema);
 export default Lesson;

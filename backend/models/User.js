@@ -4,7 +4,6 @@ const validateEmail = email => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 const validateUsername = username => /^[a-zA-Z0-9_]+$/.test(username);
 const validatePassword = password => /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d@$!%*?&]{6,}$/.test(password);
 
-// Define the structure of the User collection
 const userSchema = new mongoose.Schema(
   {
     // User's name or display name
@@ -80,11 +79,9 @@ const userSchema = new mongoose.Schema(
   },
 
   {
-    // Adds createdAt and updatedAt automatically
     timestamps: true
   }
 );
 
-// Create and export the model
 const User = mongoose.model('User', userSchema);
 export default User;

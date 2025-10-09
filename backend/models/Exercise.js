@@ -1,11 +1,9 @@
-// Import mongoose library
 const mongoose = require("mongoose");
 
-// Define the schema for the "Exercise" collection
 const ExerciseSchema = new mongoose.Schema(
     {
         // Reference to the lesson this exercise belongs to
-        lesson_id: {
+        lessonId: {
             type: mongoose.Schema.Types.ObjectId,
             ref: "Lesson", 
             required: true,
@@ -50,6 +48,5 @@ const ExerciseSchema = new mongoose.Schema(
     }
 );
 
-// Create and export the Exercise model
 const exercise = mongoose.model("Exercise", ExerciseSchema);
 export default exercise

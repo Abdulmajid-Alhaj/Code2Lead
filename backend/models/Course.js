@@ -1,7 +1,5 @@
-// Import mongoose library to define schema and model
 const mongoose = require("mongoose");
 
-// Define the schema for the "Courses" collection
 const CourseSchema = new mongoose.Schema(
     {
         // You don't need to define it unless you want a custom id
@@ -56,6 +54,5 @@ const CourseSchema = new mongoose.Schema(
     }
 );
 
-// Create and export the Course model
 const Course = mongoose.model("Course", CourseSchema);
 export default Course;
