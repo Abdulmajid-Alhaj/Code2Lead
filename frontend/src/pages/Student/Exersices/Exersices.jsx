@@ -1,11 +1,11 @@
 import React from "react";
 import Chevron from "../../../components/Chevron";
-import html from "../../assets/html.png";
-import css from "../../assets/css.png";
-import js from "../../assets/js.png";
-import react from "../../assets/react.png";
-import node from "../../assets/node.png";
-import mongo from "../../assets/mongo.png";
+import html from "../../../assets/html.png";
+import css from "../../../assets/css.png";
+import js from "../../../assets/js.png";
+import react from "../../../assets/react.png";
+import node from "../../../assets/node.png";
+import mongo from "../../../assets/mongo.png";
 import { useNavigate } from "react-router-dom";
 
 export default function Exercises() {

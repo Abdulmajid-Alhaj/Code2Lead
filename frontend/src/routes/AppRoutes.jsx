@@ -1,7 +1,7 @@
 import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { Trainee } from "../layouts/traineeLayout";
-import Exercises from "../pages/Student/Exersices";
+import Exercises from "../pages/Student/Exersices/Exersices";
 import Login from "../pages/Public/Login";
 import ForgotPassword from "../pages/Public/ForgetPassword";
 import OTP from "../pages/Public/OTP";
