@@ -6,6 +6,7 @@ import js from "../../assets/js.png";
 import react from "../../assets/react.png";
 import node from "../../assets/node.png";
 import mongo from "../../assets/mongo.png";
+import { useNavigate } from "react-router-dom";
 
 export default function Exercises() {
   const items = [
@@ -19,14 +20,15 @@ export default function Exercises() {
 
   // Placeholder for handling card click
   const handleCardClick = (item) => {
-    // In the future, fetch exercises from the database and redirect
-    // For now, just log the item or show an alert
-    alert(`Redirect to exercises for ${item.name}`);
+    const navigate = useNavigate();
+
+    const handleCardClick = (item) => {
+      navigate(`/exercises/${item.name.toLowerCase()}`);
+    };
   };
 
   return (
     <div className="relative min-h-screen  text-white flex items-center justify-center px-2">
-      
       {/* Responsive Cards Grid */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 sm:gap-12 lg:gap-16 w-full max-w-5xl">
         {items.map((item) => (

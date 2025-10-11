@@ -1,21 +1,22 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 import background from "../../assets/background.png";
-import { Link, useNavigate } from "react-router-dom";
 import logo from "../../assets/logo.png";
 
-export default function ForgotPassword() {
-  const [email, setEmail] = useState("");
+export default function OTP() {
+  const [otp, setOtp] = useState("");
+  const [message, setMessage] = useState("");
 
-  const navigate = useNavigate();
-
-  const handleSubmit = (e) => {
+  const handleVerify = (e) => {
     e.preventDefault();
-    
 
-    // simulate delay (like waiting for server)
-    setTimeout(() => {
-      navigate("/otp");
-    }, 1000);
+    // simulate verification
+    if (otp === "123456") {
+      setMessage("✅ Verification successful! You can reset your password.");
+      // later: navigate("/reset-password")
+    } else {
+      setMessage("❌ Invalid verification code. Try again.");
+    }
   };
 
   return (
@@ -29,26 +30,27 @@ export default function ForgotPassword() {
           <img src={logo} alt="Code2Lead Logo" className="w-64 md:w-80 mb-8" />
           <div className="border-4 border-white px-6 md:px-8 py-4">
             <span className="text-2xl md:text-xl text-white font-semibold italic">
-              Welcome Back
+              Verify Your Code
             </span>
           </div>
         </div>
+
         {/* Right Side */}
         <div className="bg-[#19173a]/20 backdrop-blur-md border border-gray-500 rounded-2xl pt-32 pb-32 pl-8 pr-8 w-full max-w-md shadow-2xl">
           <h2 className="text-2xl md:text-3xl font-bold text-white mb-4 text-left">
-            Forgot Password
+            Enter OTP
           </h2>
           <p className="text-gray-300 mb-6 text-left">
-            Enter your registered email address.
+            We’ve sent a verification code to your email.
           </p>
 
-          <form onSubmit={handleSubmit}>
+          <form onSubmit={handleVerify}>
             <input
-              type="email"
-              placeholder="Email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              className="w-full mb-4 px-4 py-3 rounded-md bg-transparent border border-gray-300 text-white focus:outline-none focus:border-[#a259c6] transition"
+              type="text"
+              placeholder="Enter 6-digit code"
+              value={otp}
+              onChange={(e) => setOtp(e.target.value)}
+              className="w-full mb-4 px-4 py-3 rounded-md bg-transparent border border-gray-300 text-white focus:outline-none focus:border-[#a259c6] transition text-center tracking-widest"
               required
             />
 
@@ -56,15 +58,17 @@ export default function ForgotPassword() {
               type="submit"
               className="w-full py-3 rounded-md bg-gradient-to-r from-[#5f6fff] to-[#580475] text-white font-semibold text-lg mt-2 mb-2 transition hover:opacity-90"
             >
-              Send Verify Code
+              Verify Code
             </button>
           </form>
 
-
+          {message && (
+            <p className="text-green-400 mt-4 text-center text-sm">{message}</p>
+          )}
 
           <div className="text-center mt-6">
-            <Link to="/login" className="text-gray-300 hover:underline text-sm">
-              Back to Login
+            <Link to="/forgot-password" className="text-gray-300 hover:underline text-sm">
+              Back to Forgot Password
             </Link>
           </div>
         </div>

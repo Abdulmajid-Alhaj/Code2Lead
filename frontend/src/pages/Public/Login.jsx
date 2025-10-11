@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
+import api from "../../api/axios"; // centralized axios instance
 import logo from "../../assets/logo.png";
 import background from "../../assets/background.png";
 
@@ -14,28 +16,26 @@ export default function Login() {
     setLoading(true);
 
     try {
-      const res = await fetch("http://localhost:5000/api/login", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ email, password }),
-      });
+      const res = await api.post(
+        "/login",
+        { email, password },
+        { withCredentials: true }
+      );
 
-      const data = await res.json();
+      // ✅ Backend should return: { token, user: { ... } }
+      const { user } = res.data;
 
-      if (!res.ok) {
-        throw new Error(data.message || "Invalid credentials");
-      }
+      // 🧁 Store only necessary info in cookies (token is HTTP-only)
+      document.cookie = `firstName=${user.firstName}; path=/; SameSite=Strict;`;
+      document.cookie = `email=${user.email}; path=/; SameSite=Strict;`;
+      document.cookie = `image=${user.image}; path=/; SameSite=Strict;`;
 
-      // Save token (for later auth)
-      localStorage.setItem("token", data.token);
-      localStorage.setItem("firstName", data.firstName);
-
-      // Redirect (or show success)
-      window.location.href = "/home";
+      // 👉 Now redirect to Profile
+      window.location.href = "/profile";
     } catch (err) {
-      setError(err.message);
+      const message =
+        err.response?.data?.message || "Login failed. Please try again.";
+      setError(message);
     } finally {
       setLoading(false);
     }
@@ -46,13 +46,12 @@ export default function Login() {
       className="min-h-screen bg-cover bg-center flex items-center justify-center"
       style={{ backgroundImage: `url(${background})` }}
     >
-      {/* Main content */}
       <div className="flex flex-col md:flex-row w-full max-w-5xl z-10 justify-between px-4 md:px-0">
         {/* Left Side */}
         <div className="flex flex-col justify-center items-start w-full md:w-1/2 pl-0 md:pl-12 mb-8 md:mb-0">
           <img src={logo} alt="Code2Lead Logo" className="w-64 md:w-80 mb-8" />
           <div className="border-4 border-white px-6 md:px-8 py-4">
-            <span className="text-2xl md:text-3xl text-white font-semibold italic">
+            <span className="text-2xl md:text-xl text-white font-semibold italic">
               Welcome Back
             </span>
           </div>
@@ -74,18 +73,13 @@ export default function Login() {
                 onChange={(e) => setEmail(e.target.value)}
                 className="w-full mb-4 px-4 py-3 rounded-md bg-transparent border border-gray-300 text-white focus:outline-none focus:border-[#a259c6] transition"
               />
-              <div className="relative mb-4">
-                <input
-                  type="password"
-                  placeholder="Password"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  className="w-full px-4 py-3 rounded-md bg-transparent border border-gray-300 text-white focus:outline-none focus:border-[#a259c6] transition pr-10"
-                />
-                <span className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 cursor-pointer">
-                  👁️
-                </span>
-              </div>
+              <input
+                type="password"
+                placeholder="Password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                className="w-full mb-4 px-4 py-3 rounded-md bg-transparent border border-gray-300 text-white focus:outline-none focus:border-[#a259c6] transition"
+              />
 
               {error && (
                 <p className="text-red-400 text-sm mb-2 text-center">{error}</p>
@@ -100,34 +94,13 @@ export default function Login() {
               </button>
             </form>
 
-            <div className="text-center mb-4">
-              <a href="#" className="text-gray-300 hover:underline text-sm">
+            <div className="text-center mt-4">
+              <Link
+                to="/forgot-password"
+                className="text-gray-300 hover:underline text-sm transition"
+              >
                 Forgot password ?
-              </a>
-            </div>
-
-            <div className="flex items-center my-4">
-              <hr className="flex-grow border-gray-500" />
-              <span className="mx-3 text-gray-400">Or</span>
-              <hr className="flex-grow border-gray-500" />
-            </div>
-
-            <div className="flex justify-center gap-6">
-              <button className="text-2xl">
-                <span role="img" aria-label="Google">
-                  🌐
-                </span>
-              </button>
-              <button className="text-2xl text-blue-600">
-                <span role="img" aria-label="Facebook">
-                  📘
-                </span>
-              </button>
-              <button className="text-2xl">
-                <span role="img" aria-label="GitHub">
-                  🐱
-                </span>
-              </button>
+              </Link>
             </div>
           </div>
         </div>
