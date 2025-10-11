@@ -8,6 +8,11 @@ const quizAttemptSchema = new mongoose.Schema({
     required: true
   },
 
+  exerciseId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Exercise",
+  },
+
   // الطالب الذي قام بالمحاولة
   student_id: {
     type: mongoose.Schema.Types.ObjectId,
@@ -49,7 +54,7 @@ const quizAttemptSchema = new mongoose.Schema({
     default: 0
   }
 
-// نحتاج فقط createdAt بدون updatedAt
+  // نحتاج فقط createdAt بدون updatedAt
 }, { timestamps: { createdAt: true, updatedAt: false } });
 
 export default mongoose.model("QuizAttempt", quizAttemptSchema);
