@@ -1,6 +1,6 @@
 const { validationResult, body } = require('express-validator');
 const jwt = require('jsonwebtoken');
-const User = require('../models/User');
+const User = require('../models/user');
 const authService = require('../services/authService');
 
 // Validation error handler
